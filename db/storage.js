@@ -39,18 +39,18 @@ class Storage {
             title, text, id: uuidv4()
         }
 
-        // return this.getNotes().then(note => {
-        //     [...note, newNote]
-        // })
+        return this.getNotes().then(note => {
+            [...note, newNote]
+        })
         .then(updatedNotes => this.write(updatedNotes))
         .then(()=>newNote)
 
     }
 
-    // removeNote(id) {
-    //     return this.getNotes().then(notes=>notes.filter(note => note.id !== id)).then(filteredNotes =>this.write(filteredNotes))
+    removeNote(id) {
+        return this.getNotes().then(notes=>notes.filter(note => note.id !== id)).then(filteredNotes =>this.write(filteredNotes))
 
-    // }
+    }
 }
 
 module.exports = new Storage ();
