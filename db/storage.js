@@ -39,12 +39,12 @@ class Storage {
 
         return this.getNotes().then(note => {
             [...note, newNote]
-        }).then(updatedNotes => this.write(updatedNotes)).then(()=>newNote)
+        }).then(updatedNotes => this.write(updatedNotes) ).then(()=>newNote)
 
     }
 
     removeNote(id) {
-        return this.getNotes().then(notes=>notes.filter(note => note.id !== id)).then(filteredNotes => this.write(filteredNotes))
+        return this.getNotes().then(notes=>notes.filter(note => note.id !== id)).then(filteredNotes =>this.write(filteredNotes))
 
     }
 }
