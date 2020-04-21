@@ -1,17 +1,18 @@
 const util = require("util");
 const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
+const uuidv4 = require("uuid/v4");
 
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
 class Storage {
+
     read(){
         return readFileAsync("db/db.json", "utf8")
     }
 
     write(note){
-        return writeFileAsync("db/db.json",JSON.stringify(note))
+        return writeFileAsync("db/db.json", JSON.stringify(note))
     }
 
     getNotes() {
@@ -30,6 +31,7 @@ class Storage {
 
     addNotes(notes) {
         const {title, text} = notes;
+
         if (!title || !text){
             throw new Err ("fields cannot be blank.")
         }
@@ -37,16 +39,18 @@ class Storage {
             title, text, id: uuidv4()
         }
 
-        return this.getNotes().then(note => {
-            [...note, newNote]
-        }).then(updatedNotes => this.write(updatedNotes) ).then(()=>newNote)
+        // return this.getNotes().then(note => {
+        //     [...note, newNote]
+        // })
+        .then(updatedNotes => this.write(updatedNotes))
+        .then(()=>newNote)
 
     }
 
-    removeNote(id) {
-        return this.getNotes().then(notes=>notes.filter(note => note.id !== id)).then(filteredNotes =>this.write(filteredNotes))
+    // removeNote(id) {
+    //     return this.getNotes().then(notes=>notes.filter(note => note.id !== id)).then(filteredNotes =>this.write(filteredNotes))
 
-    }
+    // }
 }
 
 module.exports = new Storage ();
