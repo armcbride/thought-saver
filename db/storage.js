@@ -39,9 +39,7 @@ class Storage {
             title, text, id: uuidv4()
         }
 
-        return this.getNotes().then(note => {
-            [...note, newNote]
-        })
+        return this.getNotes().then(note => [...note, newNote])
         .then(updatedNotes => this.write(updatedNotes))
         .then(()=>newNote)
 
